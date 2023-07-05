@@ -1,14 +1,22 @@
 package vaiagendar.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import vaiagendar.model.Perfil;
@@ -26,6 +35,7 @@ import vaiagendar.service.PerfilService;
 
 @RestController
 @RequestMapping({ "/perfil" })
+@Validated
 public class PerfilController {
     
 
@@ -87,10 +97,26 @@ public class PerfilController {
 
 	}
 
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public Map<String, String> handleException(MethodArgumentNotValidException e) {
+
+		List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+		Map<String, String> response = new HashMap<>();
+
+		allErrors.forEach(v -> {
+			String fieldName = ((FieldError) v).getField();
+			response.put(fieldName, v.getDefaultMessage());
+		});
+
+		return response;
+
+	}
+
 
     @PostMapping
 	public ResponseEntity<PerfilDTO> save(@RequestHeader Map<String, String> headers,
-			@RequestBody PerfilDTO perfilDTO) {
+		@Valid @RequestBody PerfilDTO perfilDTO) {
 
 		perfilDTO = perfilService.save(headers.get("email"), perfilDTO);
 
@@ -104,7 +130,7 @@ public class PerfilController {
 
     @PutMapping
 	public ResponseEntity<PerfilDTO> update(@RequestHeader Map<String, String> headers,
-			@RequestBody PerfilDTO perfilDTO) {
+		@Valid @RequestBody PerfilDTO perfilDTO) {
 
 		perfilDTO = perfilService.update(headers.get("email"), perfilDTO);
 
