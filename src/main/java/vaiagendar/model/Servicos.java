@@ -9,9 +9,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "perfil")
+@Table(name = "servicos")
 @Data
-public class Perfil {
+public class Servicos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +19,7 @@ public class Perfil {
 
     private String nome;
 
-    private String username;
+    private Double valor;
 
-    private String trabalho;
-
-    private String link;
-
-    private String sobre;
-
-    private String logo;
     
 }

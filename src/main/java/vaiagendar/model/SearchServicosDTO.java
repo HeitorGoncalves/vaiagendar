@@ -3,14 +3,11 @@ package vaiagendar.model;
 import lombok.Data;
 
 @Data
-public class SearchPerfilDTO {
+public class SearchServicosDTO {
     
     private Long id;
 
     private String nome;
 
-    private String username;
-
-    
     
 }

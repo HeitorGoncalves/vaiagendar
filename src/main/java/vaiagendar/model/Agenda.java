@@ -6,12 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Entity
-@Table(name = "perfil")
+@Table(name = "agenda")
 @Data
-public class Perfil {
+public class Agenda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +21,12 @@ public class Perfil {
 
     private String nome;
 
-    private String username;
+    private String whatsapp;
 
-    private String trabalho;
+    private Long servico;
 
-    private String link;
+    private Date dataHora;
 
-    private String sobre;
-
-    private String logo;
+    private String mensagem;
     
 }

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class PerfilDTO {
+public class ServicosDTO {
     
     // @NotNull(message = "O código é obrigatório")
     private Long id;
@@ -14,14 +14,7 @@ public class PerfilDTO {
     @NotEmpty(message = "O nome é obrigatório")
     private String nome;
 
-    @NotEmpty(message = "O username é obrigatório")
-    private String username;
+    private Double valor;
 
-    private String trabalho;
-
-    private String link;
-
-    private String sobre;
-
-    private String logo;
+    
 }

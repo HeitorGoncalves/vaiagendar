@@ -13,7 +13,7 @@ import vaiagendar.model.Perfil;
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
     
     @Query("FROM Perfil p WHERE (:id is null or p.id = :id) AND (:nome is '' or UPPER(p.nome) like %:nome%) " +
-    "AND (:username is '' or UPPER(p.username) like %:nome%)")
+    "AND (:username is '' or UPPER(p.username) like %:username%)")
     Page<Perfil> searchPerfil(@Param("id") Long id, @Param("nome") String nome, 
     @Param("username") String username, Pageable pageable);
 
